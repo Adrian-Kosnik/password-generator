@@ -119,7 +119,15 @@ function getRandom(arr) {
 
 // Function to generate password with user input
 function generatePassword() {
+  let passOptions = getPasswordOptions()
 
+  if (passOptions === false) {
+    return 'No password for you! Try again!'
+  } else {
+    for (let i = 0; i <= passOptions[0]; i++) {
+      let password = "";
+    }
+  }
 
 } 
 
