@@ -111,13 +111,17 @@ function getPasswordOptions() {
 
 // Function for getting a random element from an array
 function getRandom(arr) {
+  let arrLen = arr.length
+  let ranIndex =  arr[Math.floor(Math.random() * (arrLen - 0) + 0)]
 
+  return ranIndex;
 }
 
 // Function to generate password with user input
 function generatePassword() {
-  console.log(getPasswordOptions())
-}
+
+
+} 
 
 // Get references to the #generate element
 var generateBtn = document.querySelector('#generate');
