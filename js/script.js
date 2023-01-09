@@ -89,6 +89,8 @@ var upperCasedCharacters = [
 ];
 
 // Function to prompt user for password options
+
+// this function need to give me the array of arrays that the person wants
 function getPasswordOptions() {
   let choicesArr = []
 
@@ -108,6 +110,31 @@ function getPasswordOptions() {
     return false
   }
 }
+
+// Function for converting user choices into nested array
+
+function getOptionArr(arr) {
+  let charArr = [];
+
+  if (arr[0]) {
+    charArr.push(arr[0]);
+  };
+  if (arr[1]) {
+    charArr.push(lowerCasedCharacters);
+  };
+  if (arr[2]) {
+    charArr.push(upperCasedCharacters);
+  };
+  if (arr[3]) {
+    charArr.push(numericCharacters); 
+  };
+  if (arr[4]) {
+    charArr.push(specialCharacters); 
+  };
+
+  return charArr;
+}
+// console.log(getOptionArr(getPasswordOptions()))
 
 // Function for getting a random element from an array
 function getRandom(arr) {
