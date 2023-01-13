@@ -175,12 +175,24 @@ function generatePassword() {
       finalPassArr.push(passOptions[4][Math.floor(Math.random() * (passOptions[4].length - 0) + 0)])
     };
 
-    console.log(`this is the finalPassArr before shuffle: ${finalPassArr}`)
+    // This shuffles array with final characters to make sure they are in a random order.
     finalPassArr = shuffleArr(finalPassArr);
-    console.log(`this is the finalPassArr after shuffle: ${finalPassArr}`)
-
 
     if (finalPassArr.length == passOptions[0]) {
+      for (let i = 0; i < finalPassArr.length; i++) {
+        finalPassword = finalPassword + finalPassArr[i].toString();
+      };
+    } else if (finalPassArr.length < passOptions[0]) {
+      let diff = passOptions[0] - finalPassArr.length;
+      for (let i = 0; i < diff; i++) {
+        finalPassArr.push(numericCharacters[Math.floor(Math.random() * (numericCharacters.length - 0) + 0)])
+      };
+      for (let i = 0; i < finalPassArr.length; i++) {
+        finalPassword = finalPassword + finalPassArr[i].toString();
+      };
+      finalPassArr = shuffleArr(finalPassArr);
+    } else if (finalPassArr.length > passOptions[0]) {
+      finalPassArr.pop();
       for (let i = 0; i < finalPassArr.length; i++) {
         finalPassword = finalPassword + finalPassArr[i].toString();
       };
