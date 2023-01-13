@@ -88,24 +88,29 @@ var upperCasedCharacters = [
   'Z'
 ];
 
-// Function to prompt user for password options
+// Function that prompts user for password criteria after which it creates a nested array of all the characters
+// user decided to pick for their password.
 
-// this function need to give me the array of arrays that the person wants
 function getPasswordOptions() {
   let choicesArr = [];
   let finalChoiceArr = [];
   let choice = prompt('Enter number of characters between 10 and 64');
+
   finalChoiceArr.push(choice)
 
-  
+  // This if statement checks if the number of characters user asked 
+  // for is in the required range, if it is then it moves forward with asking
+  // for the remaining options whilst pushing answers into array.
   if ( choice >= 10 && choice <= 64 ) {
     choicesArr.push(
       confirm('Would you like Lowercase letters?'),
       confirm('Would you like Uppercase letters?'),
       confirm('Would you like Numbers?'),
       confirm('Would you like Special Characters?')
-    )
-
+    );
+    
+    // These 4 if statements check what options the user picked and creates a nested array
+    // of all the characters the user decided on and returns the final choices array.
     if (choicesArr[0]) {
       finalChoiceArr.push(lowerCasedCharacters);
     };
@@ -126,61 +131,67 @@ function getPasswordOptions() {
   }
 }
 
-// Function for converting user choices into nested character array that coesponds to what the user picked.
+// Function for randomising an array.
 
 
-// function getOptionArr(arr) {
-//   let userChoices = {
-//     numOfChar: arr[0],
-//   };
-//   if (arr[1]) {
-//     userChoices["lowerCaseChar"] = arr[1];
-//   };
-//   if (arr[2]) {
-//     userChoices["upperCaseChar"] = arr[2];
-//   };
-//   if (arr[3]) {
-//     userChoices["numericChar"] = arr[3];
-//   };
-//   if (arr[4]) {
-//     userChoices["specialChar"] = arr[4];
-//   };
-// };
-
-
-// Function for getting a random element from an array
-function getRandomArrElem(arr) {
-  let arrLen = arr.length
-  let ranIndex =  arr[Math.floor(Math.random() * (arrLen - 0) + 0)]
-
-  return ranIndex;
-};
+function shuffleArr(array) {
+  let currentIndex = array.length, randomIndex;
+  while (currentIndex != 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+  }
+  return array;
+}
 
 // Function to generate password with user input
 function generatePassword() {
   let passOptions = getPasswordOptions();
-  // let choiceCharArr = getOptionArr(passOptions);
-  let numOfChar = passOptions[0];
-  let loopState = true;
-  let randomPassword = "";
+  let totalNumSplit = Math.ceil(passOptions[0] / passOptions.length);
+  let finalPassArr = [];
+  let finalPassword = "";
 
+  let thisIsThing = passOptions[3].length
 
   if (passOptions === false) {
     return 'No password for you! Try again!'
   } else {
-    console.log(`This is passOptions: ${passOptions[4]}`)
-    // console.log(`This is choiceCharArr: ${choiceCharArr}`)
-    // console.log(`This is numOfChar: ${numOfChar}`)
+    console.log(`this is the totalNumSplit ${totalNumSplit}`)
+    console.log(`this is the passOptions[?].length: ${thisIsThing}`)
+    // console.log(`This is passOptions: ${passOptions[4]}`)
+    // console.log(passOptions.length)
 
-    // TODO: I want to create a string that contains the number of characters user asked for by
-    // TODO: I can take the number which user provided and devide it by the number of options the user selected
-    // TODO: I need to then (easier option can build it random later) to go through the oprions in order and grab a character and
-    // TODO: add it to the randomPassword array, keep running that loop until we have the num of characters the user asked for.
-    // TODO: return the randomPassword string for the user to see and use.
+    for (let j = 0; j < totalNumSplit; j++) {
+      // finalPassArr.push(getRandomArrElem(passOptions[1]))
+      finalPassArr.push(passOptions[1][Math.floor(Math.random() * (passOptions[1].length - 0) + 0)])
+    };
+    for (let k = 0; k < totalNumSplit; k++) {
+      finalPassArr.push(passOptions[2][Math.floor(Math.random() * (passOptions[2].length - 0) + 0)])
+    };
+    for (let l = 0; l < totalNumSplit; l++) {
+      finalPassArr.push(passOptions[3][Math.floor(Math.random() * (passOptions[3].length - 0) + 0)])
+    };
+    for (let p = 0; p < totalNumSplit; p++) {
+      finalPassArr.push(passOptions[4][Math.floor(Math.random() * (passOptions[4].length - 0) + 0)])
+    };
 
-    
+    console.log(`this is the finalPassArr before shuffle: ${finalPassArr}`)
+    finalPassArr = shuffleArr(finalPassArr);
+    console.log(`this is the finalPassArr after shuffle: ${finalPassArr}`)
 
 
+    if (finalPassArr.length == passOptions[0]) {
+      for (let i = 0; i < finalPassArr.length; i++) {
+        finalPassword = finalPassword + finalPassArr[i].toString();
+      };
+    }
+
+
+
+    console.log(`This is the finalPassArr: ${finalPassArr}`)
+    console.log(`This is the finalPassword: ${finalPassword}`)
+
+    return finalPassword;
   }
 
 };
