@@ -88,78 +88,110 @@ var upperCasedCharacters = [
   'Z'
 ];
 
-// Function to prompt user for password options
+// Function that prompts user for password criteria after which it creates a nested array of all the characters
+// user decided to pick for their password.
 
-// this function need to give me the array of arrays that the person wants
 function getPasswordOptions() {
-  let choicesArr = []
+  let choicesArr = [];
+  let finalChoiceArr = [];
+  let choice = prompt('Enter number of characters between 10 and 64');
 
-  let choice = prompt('Enter number of characters between 10 and 64')
-  
+  finalChoiceArr.push(choice)
+
+  // This if statement checks if the number of characters user asked 
+  // for is in the required range, if it is then it moves forward with asking
+  // for the remaining options whilst pushing answers into array.
   if ( choice >= 10 && choice <= 64 ) {
     choicesArr.push(
-      choice,
       confirm('Would you like Lowercase letters?'),
       confirm('Would you like Uppercase letters?'),
       confirm('Would you like Numbers?'),
       confirm('Would you like Special Characters?')
-    )
-    return choicesArr;
+    );
+    
+    // These 4 if statements check what options the user picked and creates a nested array
+    // of all the characters the user decided on and returns the final choices array.
+    if (choicesArr[0]) {
+      finalChoiceArr.push(lowerCasedCharacters);
+    };
+    if (choicesArr[1]) {
+      finalChoiceArr.push(upperCasedCharacters);
+    };
+    if (choicesArr[2]) {
+      finalChoiceArr.push(numericCharacters);
+    };
+    if (choicesArr[3]) {
+      finalChoiceArr.push(specialCharacters);
+    };
+
+    return finalChoiceArr;
   } else {
     alert('Why you gotta be like that...')
     return false
   }
 }
 
-// Function for converting user choices into nested character array that coesponds to what the user picked.
+// Function for randomising an array.
 
-function getOptionArr(arr) {
-  let charArr = [];
 
-  if (arr[0]) {
-    charArr[0].push(arr[0]);
-    // charArr = charArr + arr[0]
-  };
-  if (arr[1]) {
-    charArr.push(lowerCasedCharacters);
-    // charArr = charArr + arr[1]
-  };
-  if (arr[2]) {
-    charArr.push(upperCasedCharacters);
-    // charArr = charArr + arr[2]
-  };
-  if (arr[3]) {
-    charArr.push(numericCharacters);
-    // charArr = charArr + arr[3]
-  };
-  if (arr[4]) {
-    charArr.push(specialCharacters); 
-    // charArr = charArr + arr[4]
-  };
-
-  return charArr;
-};
-
-// Function for getting a random element from an array
-function getRandomArrElem(arr) {
-  let arrLen = arr.length
-  let ranIndex =  arr[Math.floor(Math.random() * (arrLen - 0) + 0)]
-
-  return ranIndex;
-};
+function shuffleArr(array) {
+  let currentIndex = array.length, randomIndex;
+  while (currentIndex != 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+  }
+  return array;
+}
 
 // Function to generate password with user input
 function generatePassword() {
   let passOptions = getPasswordOptions();
-  let choiceCharArr = getOptionArr();
-  let numOfChar = passOptions[0];
+  let totalNumSplit = Math.ceil(passOptions[0] / passOptions.length);
+  let finalPassArr = [];
+  let finalPassword = "";
+
+  let thisIsThing = passOptions[3].length
 
   if (passOptions === false) {
     return 'No password for you! Try again!'
   } else {
-    console.log(`This is passOptions: ${passOptions}`)
-    console.log(`This is choiceCharArr: ${choiceCharArr}`)
-    console.log(`This is numOfChar: ${numOfChar}`)
+    console.log(`this is the totalNumSplit ${totalNumSplit}`)
+    console.log(`this is the passOptions[?].length: ${thisIsThing}`)
+    // console.log(`This is passOptions: ${passOptions[4]}`)
+    // console.log(passOptions.length)
+
+    for (let j = 0; j < totalNumSplit; j++) {
+      // finalPassArr.push(getRandomArrElem(passOptions[1]))
+      finalPassArr.push(passOptions[1][Math.floor(Math.random() * (passOptions[1].length - 0) + 0)])
+    };
+    for (let k = 0; k < totalNumSplit; k++) {
+      finalPassArr.push(passOptions[2][Math.floor(Math.random() * (passOptions[2].length - 0) + 0)])
+    };
+    for (let l = 0; l < totalNumSplit; l++) {
+      finalPassArr.push(passOptions[3][Math.floor(Math.random() * (passOptions[3].length - 0) + 0)])
+    };
+    for (let p = 0; p < totalNumSplit; p++) {
+      finalPassArr.push(passOptions[4][Math.floor(Math.random() * (passOptions[4].length - 0) + 0)])
+    };
+
+    console.log(`this is the finalPassArr before shuffle: ${finalPassArr}`)
+    finalPassArr = shuffleArr(finalPassArr);
+    console.log(`this is the finalPassArr after shuffle: ${finalPassArr}`)
+
+
+    if (finalPassArr.length == passOptions[0]) {
+      for (let i = 0; i < finalPassArr.length; i++) {
+        finalPassword = finalPassword + finalPassArr[i].toString();
+      };
+    }
+
+
+
+    console.log(`This is the finalPassArr: ${finalPassArr}`)
+    console.log(`This is the finalPassword: ${finalPassword}`)
+
+    return finalPassword;
   }
 
 };
