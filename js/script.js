@@ -146,9 +146,13 @@ function shuffleArr(array) {
 
 // Function to create an array with random elements from user selecter arrays
 function selectRandElm(numSplit, options) {
-  for (let j = 0; j < numSplit; j++) {
-    finalPassArr.push(options[Math.floor(Math.random() * (options.length - 0) + 0)])
-  };
+  if (options !== undefined) {
+    for (let j = 0; j < numSplit; j++) {
+      finalPassArr.push(options[Math.floor(Math.random() * (options.length - 0) + 0)])
+    };
+  } else {
+    return null;
+  }
 }
 let finalPassArr = [];
 
@@ -160,15 +164,16 @@ function generatePassword() {
   
   let finalPassword = "";
 
-  let thisIsThing = passOptions[3].length
+  // let thisIsThing = passOptions[3].length
 
   if (passOptions === false) {
     return 'No password for you! Try again!'
   } else {
     console.log(`this is the totalNumSplit ${totalNumSplit}`)
-    console.log(`this is the passOptions[?].length: ${thisIsThing}`)
-    // console.log(`This is passOptions: ${passOptions[4]}`)
-    // console.log(passOptions.length)
+    // console.log(`this is the passOptions[?].length: ${thisIsThing}`)
+
+    // TODO: fix this bug that happens here, need to have a way of calling this based on what the user wants
+    // TODO: and not hard coding the values in there.... a loop who..?
 
     selectRandElm(totalNumSplit, passOptions[1]);
     selectRandElm(totalNumSplit, passOptions[2]);
