@@ -144,36 +144,41 @@ function shuffleArr(array) {
   return array;
 }
 
+// Function to create an array with random elements from user selecter arrays
+function selectRandElm(numSplit, options) {
+  if (options !== undefined) {
+    for (let j = 0; j < numSplit; j++) {
+      finalPassArr.push(options[Math.floor(Math.random() * (options.length - 0) + 0)])
+    };
+  } else {
+    return null;
+  }
+}
+let finalPassArr = [];
+
+
 // Function to generate password with user input
 function generatePassword() {
   let passOptions = getPasswordOptions();
   let totalNumSplit = Math.ceil(passOptions[0] / passOptions.length);
-  let finalPassArr = [];
+  
   let finalPassword = "";
 
-  let thisIsThing = passOptions[3].length
+  // let thisIsThing = passOptions[3].length
 
   if (passOptions === false) {
     return 'No password for you! Try again!'
   } else {
     console.log(`this is the totalNumSplit ${totalNumSplit}`)
-    console.log(`this is the passOptions[?].length: ${thisIsThing}`)
-    // console.log(`This is passOptions: ${passOptions[4]}`)
-    // console.log(passOptions.length)
+    // console.log(`this is the passOptions[?].length: ${thisIsThing}`)
 
-    for (let j = 0; j < totalNumSplit; j++) {
-      // finalPassArr.push(getRandomArrElem(passOptions[1]))
-      finalPassArr.push(passOptions[1][Math.floor(Math.random() * (passOptions[1].length - 0) + 0)])
-    };
-    for (let k = 0; k < totalNumSplit; k++) {
-      finalPassArr.push(passOptions[2][Math.floor(Math.random() * (passOptions[2].length - 0) + 0)])
-    };
-    for (let l = 0; l < totalNumSplit; l++) {
-      finalPassArr.push(passOptions[3][Math.floor(Math.random() * (passOptions[3].length - 0) + 0)])
-    };
-    for (let p = 0; p < totalNumSplit; p++) {
-      finalPassArr.push(passOptions[4][Math.floor(Math.random() * (passOptions[4].length - 0) + 0)])
-    };
+    // TODO: fix this bug that happens here, need to have a way of calling this based on what the user wants
+    // TODO: and not hard coding the values in there.... a loop who..?
+
+    selectRandElm(totalNumSplit, passOptions[1]);
+    selectRandElm(totalNumSplit, passOptions[2]);
+    selectRandElm(totalNumSplit, passOptions[3]);
+    selectRandElm(totalNumSplit, passOptions[4]);
 
     // This shuffles array with final characters to make sure they are in a random order.
     finalPassArr = shuffleArr(finalPassArr);
